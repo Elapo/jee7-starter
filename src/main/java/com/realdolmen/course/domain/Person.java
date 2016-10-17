@@ -23,7 +23,6 @@ public class Person implements Serializable {
 
     @NotNull
     private String lastName;
-
     /**
      * Used by JPA.
      */

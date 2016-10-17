@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+
+//DAO - Data access Object
 @Stateless
 public class PersonRepository {
     private Logger logger = LoggerFactory.getLogger(getClass());

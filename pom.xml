@@ -145,6 +145,11 @@
 			<version>1.0.3</version> <!-- Version used by Wildfly 10.0.0.Final -->
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>5.0.7.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>

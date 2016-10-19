@@ -10,7 +10,7 @@ import javax.jms.ObjectMessage;
 public class PersonMessageDrivenBeanTest extends RemoteJmsTest {
     @Test
     public void shouldSendAPersonMessage() throws JMSException {
-        ObjectMessage message = session.createObjectMessage(new Person("Theo", "Tester"));
+        ObjectMessage message = session.createObjectMessage(new Person("Theo", "Tester", "pass", "mail"));
         producer.send(message);
         assertPatiently(() -> assertEquals(3, count(Person.class)));
     }

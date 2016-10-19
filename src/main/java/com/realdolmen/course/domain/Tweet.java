@@ -1,41 +1,100 @@
 package com.realdolmen.course.domain;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
-/**
- * Created by Frederik Van Herbruggen on 17/10/2016.
- */
 @Entity
+@Table(name = "tblTweet")
 public class Tweet {
 
     @Id
-    private int PK_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PK_id")
+    private Integer id;
 
-    @Size(min = 2)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FK_Person_Id")
+    private Person user;
+
     @NotNull
-    private String userName;
+    private LocalDateTime date;
 
+    @Transient
     @Past
-    @NotNull
-    private Date date;
+    private Date oldDate;
 
     @Size(max = 140)
     @NotNull
     @NoProfanity
     private String message; //custom: NoProfanity
 
-    @ElementCollection
-    @Size(min = 1)
-    Set<String> Tags;
+    @ManyToMany(cascade=CascadeType.ALL)
+    List<Tag> Tags;
 
-    public Tweet(String userName, String message, String... tags) {
-        this.date = new Date();
-        this.userName = userName;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
+    protected Tweet(){ //Protected to keep people from using this, used by JPA
+
+    }
+
+    public Tweet(Person user, String message, Tag... tags) {
+        this.date = LocalDateTime.now();
+        this.oldDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        this.user = user;
+
         this.message = message;
-        this.Tags = new TreeSet<>(Arrays.asList(tags));
+        this.Tags = Arrays.asList(tags);
+        this.status = Status.ACTIVE;
+    }
+    public Person getUser() {
+        return user;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+        this.oldDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Tag[] getTags() {
+        return Tags.toArray(new Tag[Tags.size()]);
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Date getOldDate(){ return this.oldDate;}
+
+    public void setUser(Person user) {
+        this.user = user;
+    }
+
+    public void addTags(Tag tag) {
+        Tags.add(tag);
     }
 }

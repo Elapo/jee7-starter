@@ -56,6 +56,7 @@
          -->
         <class>com.realdolmen.course.domain.Person</class>
         <class>com.realdolmen.course.domain.Tweet</class>
+        <class>com.realdolmen.course.domain.Tag</class>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />

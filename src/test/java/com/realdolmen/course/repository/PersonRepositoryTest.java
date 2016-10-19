@@ -21,17 +21,17 @@ public class PersonRepositoryTest extends JpaPersistenceTest {
 
     @Test(expected = ConstraintViolationException.class)
     public void personCanNotBePersistedWithoutFirstName() throws Exception {
-        personRepository.save(new Person(null, "Liskov"));
+        personRepository.save(new Person(null, "Liskov", "pass", "mail"));
     }
 
     @Test(expected = ConstraintViolationException.class)
     public void personCanNotBePersistedWithoutLastName() throws Exception {
-        personRepository.save(new Person("Barbara", null));
+        personRepository.save(new Person("Barbara", null, "pass", "mail"));
     }
 
     @Test
     public void shouldSaveAPerson() {
-        Person p = new Person("Theo", "Tester");
+        Person p = new Person("Theo", "Tester", "pass", "mail");
         personRepository.save(p);
         assertNotNull("Person ID is not supposed to be null after saving", p.getId());
     }

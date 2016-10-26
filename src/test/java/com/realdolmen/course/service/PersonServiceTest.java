@@ -1,6 +1,7 @@
 package com.realdolmen.course.service;
 
 import com.realdolmen.course.domain.Person;
+import com.realdolmen.course.domain.VerifiedPerson;
 import com.realdolmen.course.repository.PersonRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class PersonServiceTest {
 
     @Before
     public void setupMox() {
-        Person person = new Person("Theo", "Tester" , "pass", "mail");
+        Person person = new VerifiedPerson("Theo", "Tester" , "pass", "mail", LocalDateTime.now(), 21);
         List<Person> persons = new ArrayList<>();
         persons.add(person);
         when(repository.findAll()).thenReturn(persons);
@@ -49,7 +51,7 @@ public class PersonServiceTest {
 
     @Test
     public void shouldCreateAPerson() {
-        Person person = new Person("Theo", "Tester", "pass", "mail");
+        Person person = new VerifiedPerson("Theo", "Tester", "pass", "mail", LocalDateTime.now(), 21);
         service.save(person);
         verify(repository).save(same(person));
     }

@@ -6,16 +6,19 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@Table(name = "tblPerson")
-public class Person implements Serializable {
+public abstract class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    private int age;
 
     @NotNull
     private String firstName;
@@ -35,7 +38,7 @@ public class Person implements Serializable {
     protected Person() {
     }
 
-    public Person(String firstName, String lastName, String password, String email) {
+    public Person(String firstName, String lastName, String password, String email, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -93,5 +96,13 @@ public class Person implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
